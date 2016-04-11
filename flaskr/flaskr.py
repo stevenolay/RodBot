@@ -1,8 +1,9 @@
 # all the imports
 #import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
-     abort, render_template, flash
-
+     abort, render_template, flash, jsonify
+from jinja2 import Environment, FileSystemLoader
+import os
 # configuration
 DATABASE = '/tmp/flaskr.db'
 DEBUG = True
@@ -17,13 +18,15 @@ app.config.from_object(__name__)
 #def connect_db():
     #return sqlite3.connect(app.config['DATABASE'])
 status =  True
-@app.route('/')
-def show_entries():
-
-    entries = [dict(title='hello', text='swaggy')]
-    return render_template('index.html')	
+@app.route('/<param>')
+def show_entries(param):
+    #entries = [dict(title='hello', text='swaggy')]
+	art = ""
+	return render_template('index.html', data = {'status': param, 'article_url': art})
+	
+@app.route('/status')	
 def get_status():
-	return status
+	return str(status)
 
 	
 	

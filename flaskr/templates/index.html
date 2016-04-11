@@ -7,10 +7,23 @@
 	<div class="row">
 		<h1>Welcome to RodBot!</h1>
 		<div>
-			{%if True %}
-				<h1>Got your message<h1>
+			{%if data['status'] == 'submitted'%}
+				<h2>Here is your article:<a href= "{{data['article_url']}}" > here</a> <h2>
 			{% endif %}
 		</div>
+		<div class="form-group">
+			<label for="comment">Comment:</label>
+			<textarea class="form-control" rows="5" id="comment">Welcome to RodBot >
+			</textarea>
+		</div>
+		<form>
+			<div class="form-group">
+			  <label for="chat">Tell RodBot What You Would Like to Read:</label>
+			  <input type="text" class="form-control" id="chat">
+			  <input type="submit" value="Submit">
+			</div>
+		</form>
+
 	</div>
 	
 </div>
