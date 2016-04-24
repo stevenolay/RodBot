@@ -3,6 +3,7 @@ text-align: center;
 padding-right:200px;
 }
 #narrator{
+overflow-y:scroll;
 background-color:gray;
 height: 500px;
 }

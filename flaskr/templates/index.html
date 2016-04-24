@@ -11,7 +11,7 @@
 		</div>
 		<div class="col-md-1">
 		</div>
-		<div class="col-md-4" id="narrator">
+		<div class="col-md-4 col-md-offset-0" id="narrator">
 			Welcome to RodBot >
 			{%if data['status'] == 'submitted'%}
 		    I found an article for you. Here you go: {{data['article_url']}} 
@@ -19,22 +19,17 @@
 		</div>  
 	</div>
 	<div class="row">
-		<div class="col-md-8 col-md-offset-0" id="user-response">
-		<p>test</p>
-		</div>
-	</div>
+		<table width="115%">
 		<label for="chat">Tell RodBot What You Would Like to Read:</label>
-		<table width="90%">
 		<tr>
-			<form method="get" action="submitted">
-					<td>
-					  <input type="text" class="form-control" id="chat" style="width: 100%">
-					</td>
-					<td style="padding-left: 50px">
-						<input type="button" value="Submit" onclick="findArticle2()">
-					</td>
-			</form>
+			<td>
+			  <input type="text" class="form-control" id="chat">
+			</td>
+			<td style="padding-left: 50px">
+				<input type="button" value="Submit" onclick="findArticle2()">
+			</td>
 		</tr>
 		</table>
+	</div>
 </div>
 {% endblock %}

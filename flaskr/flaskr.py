@@ -50,8 +50,13 @@ def summarize(title, content):
 
 happy = ['cute', 'lol', 'yaaass', 'omg']
 funny = ['lol', 'fail']
-sad = ['fail', 'omg']
-
+sad = ['fail']
+def getGif(param):
+	adj = str(param)
+	r = requests.get("http://api.giphy.com/v1/gifs/search?q="+adj+"&api_key=dc6zaTOxFJmzC")
+	resp = r.json()
+	return resp["data"][random.randint(0, len(resp["data"]) - 1)]["images"]["fixed_width"]["url"]
+	
 def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 	if str(adj) == "happy":
 		adj = random.choice(happy)
@@ -65,8 +70,10 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		res = r.json()
 		buzz = res['buzzes']
 		for j in buzz:
-			buzzes.append(j)
-	if buzzes:	
+			if j['language'] == 'en':
+				buzzes.append(j)
+			
+	if buzzes:	#Generates summary
 		num = random.randint(0, len(buzzes) - 1)
 		url = "http://www.buzzfeed.com/api/v2/buzz/" + str(buzzes[num]['id'])
 		r = requests.get(url) 
@@ -81,9 +88,11 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		st = SummaryTool()
 		sentences_dic = st.get_sentences_ranks(content)
 		summary = st.get_summary(title, content, sentences_dic)
-		
-		#return 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri'] + content + "\n" +  buzzes[num]['id']
-		return "Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
+			
+		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj))}
+		return jsonify(ret)
+		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
 	return " "
 	
 if __name__ == '__main__':
