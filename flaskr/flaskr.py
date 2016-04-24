@@ -1,8 +1,6 @@
 # all the imports
 #import sqlite3
 import sys
-sys.path.append("requests-2.9.1-py2.7.egg") #This prevents the need from installing requests on your machine
-sys.path.append("Flask-0.10.1-py2.7.egg") #This prevents the need of installing flask on your machine
 
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, jsonify
