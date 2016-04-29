@@ -1,35 +1,22 @@
 <!DOCTYPE html>
-
-
 {% extends "layout.html" %}
 {% block body %}
-<div class="container">
-	<div class="row">
-		<h1>Welcome to RodBot!</h1>
-		<div class="col-md-4 col-md-offset-1">
-		<img src="{{ url_for('static', filename='RodSerling.jpg') }}" style="width:100%" align="left">
-		</div>
-		<div class="col-md-1">
-		</div>
-		<div class="col-md-4 col-md-offset-0" id="narrator">
-			Welcome to RodBot >
-			{%if data['status'] == 'submitted'%}
-		    I found an article for you. Here you go: {{data['article_url']}} 
-			{% endif %}
-		</div>  
+	<div class="logo">
+		<ul>
+	    <li class="title"><p>RodBot</p><p><em>Typing....</em></p></li>
+		</ul>
 	</div>
-	<div class="row">
-		<table width="115%">
-		<label for="chat">Tell RodBot What You Would Like to Read:</label>
-		<tr>
-			<td>
-			  <input type="text" class="form-control" id="chat">
-			</td>
-			<td style="padding-left: 50px">
-				<input type="button" value="Submit" onclick="findArticle2()">
-			</td>
-		</tr>
-		</table>
-	</div>
-</div>
+    <div class="chat" id="chat">
+  <ul id="chatcontainter">
+    <li class="narImage"><img src="{{ url_for('static', filename='small3.jpeg') }}">
+      <div class="narrator">Hi, Rod here. You're about to hear a story. What would you like to read today?</div>
+    </li>
+  </ul>
+ </div>
+ <div class="submit">
+	<br>
+	<br>
+  <input type="text" id="inputBox" name="formVal" placeholder="Tell me something...|." /><button onclick="findArticle2()">Press to see</button>
+   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+</div>	
 {% endblock %}
