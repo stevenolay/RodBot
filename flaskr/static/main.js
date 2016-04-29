@@ -14,9 +14,7 @@ function httpGet(theUrl)
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
-/*
 
-*/
 function test(){
 console.log("hello");
 }
@@ -78,7 +76,6 @@ function generateNar(input){
 	console.log(gifURL);
 	
 	//build story
-	
 	var story = document.createElement("div");
 	story.className = "story";
 	story.innerHTML = title;
