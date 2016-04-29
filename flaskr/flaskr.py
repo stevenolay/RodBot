@@ -88,7 +88,7 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		summary = st.get_summary(title, content, sentences_dic)
 			
 		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
-		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj))}
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title}
 		return jsonify(ret)
 		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
 	return " "
