@@ -8,7 +8,7 @@ html{
   font:12px Trebuchet MS;
   min-width:300px;
   width:300px;
-  height:500px;
+  height:450px;
   margin:auto auto;
   overflow-y: scroll;
 }
@@ -160,4 +160,26 @@ width:50px;
 }
 .preview{
   color:gray;
+}
+.welcome{
+  font:12px Trebuchet MS;
+  min-width:300px;
+  width:300px;
+  height:470px;
+  margin:auto auto;
+  background-image:url(/static/welcome.png);
+  filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+  -moz-background-size:100% 100%;
+  background-size:100% 100%;
+}
+.imgButton{
+  margin:auto auto;
+  min-width:300px;
+  width:300px;
+  height:30px;
+}
+.imgButton img{
+  min-width:300px;
+  width:300px;
+  height:30px;
 }
