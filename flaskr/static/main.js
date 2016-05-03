@@ -27,7 +27,7 @@ function findArticle2(){
 	document.getElementById("inputBox").value = "";
 	generateUser(input);
 	updateScroll();
-	generateNar(input);
+	makeCall(input);
 	updateScroll();
 }
 function generateUser(input){
@@ -50,7 +50,21 @@ function generateUser(input){
 	
 	chatCont.appendChild(userLi);
 }
-function generateNar(input){
+function makeCall(input){
+	var url = "http://rcs-webportal-dev-corpulentgowk.c9users.io:8080/find/" + input;
+	$.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+            console.log(res);
+            var data = res;
+            generateNar(input, data)
+        }
+    });
+	
+}
+function generateNar(input, data){
 	var chatCont = document.getElementById("chatcontainter");
 
 	var narLi = document.createElement("li");
@@ -65,10 +79,8 @@ function generateNar(input){
 	
 	narResponse.className = "narrator";
 	narResponse.innerHTML = "Here is something " + input ;
-	
-	var url = "http://localhost:5000/find/" + input;
-	var articleInfo	= JSON.parse(httpGet(url));
-	
+	var articleInfo = data;
+
 	buzzURL = articleInfo["buzzURL"];
 	summary = articleInfo["summary"];
 	gifURL = articleInfo["gifURL"];
