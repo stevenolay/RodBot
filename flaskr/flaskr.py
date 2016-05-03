@@ -1,7 +1,8 @@
 # all the imports
 #import sqlite3
 import sys
-
+import ast
+import json 
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, jsonify
 from jinja2 import Environment, FileSystemLoader
@@ -29,6 +30,12 @@ app.config.from_object(__name__)
     #return sqlite3.connect(app.config['DATABASE'])
 status =  True
 
+with open('data.txt', 'r') as myfile:
+    lexiconDict = myfile.read().replace('\n', '')
+lexiconDict = ast.literal_eval(lexiconDict)
+#lexiconDict = json.dumps(lexiconDict)
+#lexiconDict = json.loads(lexiconDict)
+#print lexiconDict['happily']
 @app.route('/')
 def show_vanilla_home():
 	return render_template('index.html', data = {'status': '', 'article_url': ''})
@@ -49,6 +56,21 @@ def summarize(title, content):
 happy = ['cute', 'lol', 'yaaass', 'omg']
 funny = ['lol', 'fail']
 sad = ['fail']
+#buzzfeed  = ['yaaass', 'omg', 'surprise', 'lol', 'cute', 'win', 'wtf', 'fail', 'ew', 'love', 'hate', 'amazing', 'blimey', 'splendid',  'trashy']
+
+# anger = ['hate', 'fail']
+# fear =  ['ew', 'creepy']
+# anticipation =  ['omg', 'surprise', 'win', 'wtf', 'splendid']
+# trust = ['win', 'splendid', 'love']
+# surprise = ['blimey', 'amazing', 'omg', 'wtf']
+# sadness = ['fail']
+# joy = ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win']
+# disgust = ['ew', 'trashy', 'fail']
+# positive = ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing']
+# negative = ['trashy', 'wtf', 'fail', 'hate', 'ew']
+
+emotion_hash = {'anger': ['hate', 'fail'], 'fear': ['ew', 'creepy'], 'anticipation': ['omg', 'surprise', 'win', 'wtf', 'splendid'] ,'trust' : ['win', 'splendid', 'love'], 'surprise' : ['blimey', 'amazing', 'omg', 'wtf'], 'sadness' : ['fail'], 'joy' : ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win'], 'disgust' : ['ew', 'trashy', 'fail'], 'positive' : ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing'], 'negative' : ['trashy', 'wtf', 'fail', 'hate', 'ew']}
+print emotion_hash
 def getGif(param):
 	adj = str(param)
 	r = requests.get("http://api.giphy.com/v1/gifs/search?q="+adj+"&api_key=dc6zaTOxFJmzC")
@@ -56,12 +78,12 @@ def getGif(param):
 	return resp["data"][random.randint(0, len(resp["data"]) - 1)]["images"]["fixed_width"]["url"]
 	
 def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
-	if str(adj) == "happy":
-		adj = random.choice(happy)
-	if str(adj) == "funny":
-		adj = random.choice(funny)
-	if str(adj) == "sad":
-		adj = random.choice(sad)
+	if str(adj) in emotion_hash:
+		adj = random.choice(emotion_hash[adj])
+	else:
+		ranK = random.choice(emotion_hash.keys())
+		adj = random.choice(emotion_hash[ranK])
+		
 	buzzes = []
 	for i in range(1,10):
 		r = requests.get('http://www.buzzfeed.com/api/v2/feeds/'+str(adj)+'?p='+str(i))
