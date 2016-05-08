@@ -70,7 +70,7 @@ sad = ['fail']
 # negative = ['trashy', 'wtf', 'fail', 'hate', 'ew']
 
 emotion_hash = {'anger': ['hate', 'fail'], 'fear': ['ew', 'creepy'], 'anticipation': ['omg', 'surprise', 'win', 'wtf', 'splendid'] ,'trust' : ['win', 'splendid', 'love'], 'surprise' : ['blimey', 'amazing', 'omg', 'wtf'], 'sadness' : ['fail'], 'joy' : ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win'], 'disgust' : ['ew', 'trashy', 'fail'], 'positive' : ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing'], 'negative' : ['trashy', 'wtf', 'fail', 'hate', 'ew']}
-print emotion_hash
+
 def getGif(param):
 	adj = str(param)
 	r = requests.get("http://api.giphy.com/v1/gifs/search?q="+adj+"&api_key=dc6zaTOxFJmzC")
@@ -116,4 +116,5 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 	return " "
 	
 if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)))
+    #app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)))
+	app.run(debug=True)
