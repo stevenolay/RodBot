@@ -51,7 +51,8 @@ function generateUser(input){
 	chatCont.appendChild(userLi);
 }
 function makeCall(input){
-	var url = "http://rcs-webportal-dev-corpulentgowk.c9users.io:8080/find/" + input;
+	//var url = "http://rcs-webportal-dev-corpulentgowk.c9users.io:8080/find/" + input;
+	var url = "http://localhost:5000/find/" + input;
 	$.ajax({
         url: url,
         type: 'GET',
