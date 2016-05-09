@@ -38,14 +38,17 @@ lexiconDict = ast.literal_eval(lexiconDict)
 #print lexiconDict['happily']
 @app.route('/')
 def show_vanilla_home():
-	return render_template('index.html', data = {'status': '', 'article_url': ''})
+	return render_template('welcome.html', data = {'status': '', 'article_url': ''})
 
 @app.route('/find/<param>')
 def show_entries(param):
     #entries = [dict(title='hello', text='swaggy')]
-	art = findArticle(str(param))
-	return art
-	
+    art = findArticle(str(param))
+    return art
+@app.route('/home')
+def home():
+    return render_template('index.html')
+
 def summarize(title, content):
 
 	st = SummaryTool()
