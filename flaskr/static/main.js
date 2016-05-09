@@ -8,13 +8,7 @@ function findArticle(args){
 	window.location = adj
 }
 
-function httpGet(theUrl)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-}
+
 
 function test(){
 console.log("hello");
@@ -138,7 +132,7 @@ function makeTypeNar(strings, typed, input){
 }
 function makeCall(input){
 	//var url = "http://rcs-webportal-dev-corpulentgowk.c9users.io:8080/find/" + input;
-	var url = "http://localhost:5000/find/" + input;
+	var url = "/find/" + input;
 	$.ajax({
         url: url,
         type: 'GET',
