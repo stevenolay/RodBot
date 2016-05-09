@@ -1,0 +1,54 @@
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/typed.js" type="text/javascript"></script>
+    <script>
+    $(function(){
+
+        $("#typed").typed({
+           
+            stringsElement: $('#typed-strings'),
+            typeSpeed: 30,
+            backDelay: 500,
+            loop: false,
+            contentType: 'html', // or text
+            // defaults to false for infinite loop
+            loopCount: false,
+            callback: function(){ foo(); },
+            resetCallback: function() { newTyped(); }
+        });
+
+        $(".reset").click(function(){
+            $("#typed").typed('reset');
+        });
+
+    });
+
+    function newTyped(){ /* A new typed object */ }
+
+    function foo(){ console.log("Callback"); }
+
+    </script>
+ 
+</head>
+<body>
+<div class="logo">
+		<ul>
+	    <li class="title"><p>RodBot</p></li>
+		</ul>
+	</div>
+    <div class="chat" id="chat">
+  <ul id="chatcontainter">
+    <li class="narImage">
+      <div class="narrator">Hi, Rod here. You're about to hear a story. What would you like to read today?</div>
+    </li>
+  </ul>
+ </div>
+ <div class="submit">
+	<br>
+	<br>
+  <input type="text" id="inputBox" name="formVal" placeholder="Tell me something...|." /><button onclick="findArticle2()">Press to see</button>
+
+</div>
+
+</body>

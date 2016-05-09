@@ -81,6 +81,7 @@ width:50px;
   box-sizing:border-box;
  /* Chat box */ 
   background:#daffb1;
+  word-wrap: break-word;
 
 }
 

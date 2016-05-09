@@ -9,14 +9,21 @@
     <div class="chat" id="chat">
   <ul id="chatcontainter">
     <li class="narImage"><img src="{{ url_for('static', filename='small3.jpeg') }}">
-      <div class="narrator">Hi, Rod here. You're about to hear a story. What would you like to read today?</div>
+      <div class="narrator">
+          <div id="typed-strings">
+              <p>Hi, Rod here. You're about to hear a story. What would you like to read today?</p>
+          </div>
+
+		<span id="typed" ></span>
+      </div>
     </li>
+
+	
   </ul>
  </div>
  <div class="submit">
 	<br>
 	<br>
   <input type="text" id="inputBox" name="formVal" placeholder="Tell me something...|." /><button onclick="findArticle2()">Press to see</button>
-   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-</div>	
+</div>
 {% endblock %}

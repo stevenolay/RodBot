@@ -1,5 +1,6 @@
 
-
+var user_count = 0
+var nar_count = 0
 function findArticle(args){
 
 	var adj = document.getElementById("chat").value
@@ -27,8 +28,45 @@ function findArticle2(){
 	document.getElementById("inputBox").value = "";
 	generateUser(input);
 	updateScroll();
-	makeCall(input);
-	updateScroll();
+}
+function narratorSpeaks(input){
+	var chatCont = document.getElementById("chatcontainter");
+
+	var narLi = document.createElement("li");
+	narLi.className = "narImage";
+
+	var narImage = document.createElement("img");
+	narImage.src = "/static/small3.jpeg";
+
+	narLi.appendChild(narImage);
+
+	var narResponse = document.createElement("div");
+
+	narResponse.className = "narrator";
+
+	var typedStrings =  document.createElement("div");
+	var nar_strings = "nar_strings" + nar_count;
+	typedStrings.id = nar_strings;
+
+	var par = document.createElement("p");
+	var textNode = document.createTextNode("Okay. Let me see if I can find something " + input + " for you.");
+	par.appendChild(textNode);
+
+	typedStrings.appendChild(par);
+
+	narResponse.appendChild(typedStrings);
+
+	span = document.createElement("span");
+	var nar_span = "nar_typed" + nar_count;
+	span.id = nar_span;
+
+	narResponse.appendChild(span);
+
+	narLi.appendChild(narResponse);
+
+	chatCont.appendChild(narLi);
+	makeTypeNar(nar_strings,nar_span, input);
+	nar_count += 1;
 }
 function generateUser(input){
 	var chatCont = document.getElementById("chatcontainter");
@@ -44,11 +82,59 @@ function generateUser(input){
 	var userResponse = document.createElement("div");
 	
 	userResponse.className = "user";
-	userResponse.innerHTML = "Tell me something " + input;
-	
+
+	var typedStrings =  document.createElement("div");
+	var user_strings = "user_strings" + user_count;
+	typedStrings.id = user_strings;
+
+	var par = document.createElement("p");
+	var textNode = document.createTextNode("Tell me something " + input);
+	par.appendChild(textNode);
+
+	typedStrings.appendChild(par);
+
+	userResponse.appendChild(typedStrings);
+
+	var span = document.createElement("span");
+	var user_span = "user_typed" + user_count;
+	span.id = user_span;
+
+	userResponse.appendChild(span);
 	userLi.appendChild(userResponse);
-	
 	chatCont.appendChild(userLi);
+
+	makeType(user_strings, user_span, input);
+	user_count += 1;
+}
+function makeType(strings, typed, input){
+
+	$("#" + typed).typed({
+
+		stringsElement: $('#' + strings),
+		typeSpeed: 30,
+		backDelay: 500,
+		loop: false,
+		contentType: 'html', // or text
+		// defaults to false for infinite loop
+		loopCount: false,
+		callback: function(){ narratorSpeaks(input), updateScroll(); }
+	});
+
+}
+function makeTypeNar(strings, typed, input){
+
+	$("#" + typed).delay(1000).typed({
+
+		stringsElement: $('#' + strings),
+		typeSpeed: 30,
+		backDelay: 500,
+		loop: false,
+		contentType: 'html', // or text
+		// defaults to false for infinite loop
+		loopCount: false,
+		callback: function(){ makeCall(input), updateScroll(); }
+	});
+
 }
 function makeCall(input){
 	//var url = "http://rcs-webportal-dev-corpulentgowk.c9users.io:8080/find/" + input;
@@ -124,4 +210,5 @@ function generateNar(input, data){
 	narLi.appendChild(narResponse);
 	
 	chatCont.appendChild(narLi);
+	updateScroll();
 }
