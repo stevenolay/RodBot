@@ -161,7 +161,7 @@ function generateNar(input, data){
 	narResponse.className = "narrator";
 	narResponse.innerHTML = "Here is something " + input ;
 	var articleInfo = data;
-
+	console.log(articleInfo['classification']);
 	buzzURL = articleInfo["buzzURL"];
 	summary = articleInfo["summary"];
 	gifURL = articleInfo["gifURL"];

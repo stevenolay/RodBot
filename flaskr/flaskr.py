@@ -3,6 +3,9 @@
 import sys
 import ast
 import json 
+import string 
+import copy
+import io 
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, jsonify
 from jinja2 import Environment, FileSystemLoader
@@ -71,8 +74,7 @@ sad = ['fail']
 # disgust = ['ew', 'trashy', 'fail']
 # positive = ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing']
 # negative = ['trashy', 'wtf', 'fail', 'hate', 'ew']
-
-emotion_hash = {'anger': ['hate', 'fail'], 'fear': ['ew', 'creepy'], 'anticipation': ['omg', 'surprise', 'win', 'wtf', 'splendid'] ,'trust' : ['win', 'splendid', 'love'], 'surprise' : ['blimey', 'amazing', 'omg', 'wtf'], 'sadness' : ['fail'], 'joy' : ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win'], 'disgust' : ['ew', 'trashy', 'fail'], 'positive' : ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing'], 'negative' : ['trashy', 'wtf', 'fail', 'hate', 'ew']}
+emotion_hash = {'anger': ['hate', 'fail'], 'fear': ['creepy'], 'anticipation': ['omg', 'surprise', 'win', 'wtf', 'splendid'] ,'trust' : ['win', 'splendid', 'love'], 'surprise' : ['blimey', 'amazing', 'omg', 'wtf'], 'sadness' : ['fail'], 'joy' : ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win'], 'disgust' : ['ew', 'trashy', 'fail'], 'positive' : ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing'], 'negative' : ['trashy', 'wtf', 'fail', 'hate', 'ew']}
 
 def getGif(param):
 	adj = str(param)
@@ -90,7 +92,9 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 	buzzes = []
 	for i in range(1,10):
 		r = requests.get('http://www.buzzfeed.com/api/v2/feeds/'+str(adj)+'?p='+str(i))
-		res = r.json()
+		res = r.text.replace('\n', '')
+		res = json.loads(res)
+		
 		buzz = res['buzzes']
 		for j in buzz:
 			if j['language'] == 'en':
@@ -111,13 +115,46 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		st = SummaryTool()
 		sentences_dic = st.get_sentences_ranks(content)
 		summary = st.get_summary(title, content, sentences_dic)
+		
+		classification = classify(content)
 			
 		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
-		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title}
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title, "classification": classification}
 		return jsonify(ret)
 		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
 	return " "
+
+
+def classify(summary):
+	summ = summary
 	
+	for i in string.punctuation:
+		summ = summ.replace(i, ' ')
+
+	summ = summ.split(' ')
+	summ = filter(lambda a: a != '', summ)
+	
+	lexiconDict
+	emotion_counts = {'anger': 0, 'fear': 0, 'anticipation': 0 ,'trust' : 0, 'surprise' : 0, 'sadness' : 0, 'joy' : 0, 'disgust' : 0, 'positive' : 0, 'negative' : 0}
+	
+	index = 0 
+	while index < len(summ):
+		if summ[index] == ("not" or "Not"):
+			if summ[index + 1] in lexiconDict.keys():
+				emotes = lexiconDict[summ[index + 1]]
+				for i in emotes:
+					emotion_counts[i] = emotion_counts[i] - 1
+			index += 2
+		elif summ[index] in lexiconDict.keys():
+			emotes = lexiconDict[summ[index]]
+			for i in emotes:
+				emotion_counts[i] = emotion_counts[i] + 1
+			index += 1
+		else: 
+			index += 1
+
+	return max(emotion_counts, key=emotion_counts.get)
+
 if __name__ == '__main__':
     #app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)))
 	app.run(debug=True)
