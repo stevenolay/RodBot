@@ -111,6 +111,7 @@ function generateUser(input){
 
 	updateScroll();
 	makeType(user_strings, user_span, input);
+	updateScroll();
 	user_count += 1;
 }
 
