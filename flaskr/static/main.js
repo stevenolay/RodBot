@@ -69,6 +69,7 @@ function narratorSpeaks(input, data, i){
 		makeTypeNar(nar_strings,nar_span, input, data);
 	else
 		makeNarSpeak(nar_strings,nar_span, input, data, index);
+	updateScroll();
 	nar_count += 1;
 }
 function generateUser(input){
@@ -108,6 +109,7 @@ function generateUser(input){
 	userLi.appendChild(userResponse);
 	chatCont.appendChild(userLi);
 
+	updateScroll();
 	makeType(user_strings, user_span, input);
 	user_count += 1;
 }
@@ -135,7 +137,9 @@ function makeTypeNar(strings, typed, input, data){
 		// defaults to false for infinite loop
 		loopCount: false,
 		callback: function(){
-            generateNar(input, data);
+			updateScroll(),
+            generateNar(input, data),
+            updateScroll();
 		}
 	});
 
@@ -166,7 +170,8 @@ function makeNarSpeak(strings, typed, input, data, i){
 		// defaults to false for infinite loop
 		loopCount: false,
 		callback: function(){
-            narratorSpeaks(input, data, i);
+			updateScroll(),
+            narratorSpeaks(input, data, i),
             updateScroll();
 		}
 	});
