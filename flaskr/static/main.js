@@ -171,8 +171,8 @@ function makeNarSpeak(strings, typed, input, data, i){
 		loopCount: false,
 		callback: function(){
 			updateScroll(),
-            narratorSpeaks(input, data, i),
-            updateScroll();
+			narratorSpeaks(input, data, i),
+			updateScroll();
 		}
 	});
 }
