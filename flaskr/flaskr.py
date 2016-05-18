@@ -36,6 +36,10 @@ status =  True
 with open('data.txt', 'r') as myfile:
     lexiconDict = myfile.read().replace('\n', '')
 lexiconDict = ast.literal_eval(lexiconDict)
+
+with open('storyboard.txt', 'r') as myfile:
+    storyboardDict = myfile.read().replace('\n', '')
+storyboardDict = ast.literal_eval(storyboardDict)
 #lexiconDict = json.dumps(lexiconDict)
 #lexiconDict = json.loads(lexiconDict)
 #print lexiconDict['happily']
@@ -83,12 +87,16 @@ def getGif(param):
 	return resp["data"][random.randint(0, len(resp["data"]) - 1)]["images"]["fixed_width"]["url"]
 	
 def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
-	if str(adj) in emotion_hash:
-		adj = random.choice(emotion_hash[adj])
+	print str(adj)
+	if str(adj) in lexiconDict:
+		emotion = random.choice(lexiconDict[adj])
+		adj = random.choice(emotion_hash[emotion])
 	else:
 		ranK = random.choice(emotion_hash.keys())
+		emotion = ranK
 		adj = random.choice(emotion_hash[ranK])
-		
+	print str(emotion)
+	print str(adj)
 	buzzes = []
 	for i in range(1,10):
 		r = requests.get('http://www.buzzfeed.com/api/v2/feeds/'+str(adj)+'?p='+str(i))
@@ -117,24 +125,26 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		summary = st.get_summary(title, content, sentences_dic)
 		
 		classification = classify(content)
+		storyboard = getStoryboard(emotion)
 			
 		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
-		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title, "classification": classification}
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title, "classification": classification, "storyboard": storyboard}
 		return jsonify(ret)
 		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
+	print "deadend"
 	return " "
 
 
 def classify(summary):
 	summ = summary
-	
+
 	for i in string.punctuation:
 		summ = summ.replace(i, ' ')
 
 	summ = summ.split(' ')
 	summ = filter(lambda a: a != '', summ)
 	
-	lexiconDict
+	#lexiconDict
 	emotion_counts = {'anger': 0, 'fear': 0, 'anticipation': 0 ,'trust' : 0, 'surprise' : 0, 'sadness' : 0, 'joy' : 0, 'disgust' : 0, 'positive' : 0, 'negative' : 0}
 	
 	index = 0 
@@ -154,6 +164,17 @@ def classify(summary):
 			index += 1
 
 	return max(emotion_counts, key=emotion_counts.get)
+
+def getStoryboard(adj):
+	print adj
+	choice = storyboardDict[adj]
+	print choice
+	if adj == "surprise" or adj == "joy":
+		return choice
+	elif adj == "sadness" or adj == "disgust" or adj == "negative":
+		return [choice[0], choice[random.randint(1, len(choice)-1)]]
+	else:
+		return [choice[random.randint(0, len(choice)-1)]]
 
 if __name__ == '__main__':
     #app.run(host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)))
