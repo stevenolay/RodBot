@@ -121,6 +121,7 @@ function makeType(strings, typed, input){
 	});
 
 }
+
 function makeTypeNar(strings, typed, input){
 
 	$("#" + typed).delay(1000).typed({
@@ -146,7 +147,9 @@ function makeCall(input){
         success: function(res) {
             console.log(res);
             var data = res;
-            generateNar(input, data)
+			narratorSpeaksReloader(data, input, data['story'],0 ,data['story'].length);
+			console.log(data['story'])
+
         }
     });
 	
@@ -165,7 +168,8 @@ function generateNar(input, data){
 	var narResponse = document.createElement("div");
 	
 	narResponse.className = "narrator";
-	narResponse.innerHTML = "Here is something " + input ;
+	//narResponse.innerHTML = "Here is something " + input ;
+
 	var articleInfo = data;
 	console.log(articleInfo['classification']);
 	buzzURL = articleInfo["buzzURL"];
@@ -211,4 +215,72 @@ function generateNar(input, data){
 	
 	chatCont.appendChild(narLi);
 	updateScroll();
+}
+
+function makeTypeNarReloader(strings, typed,data, input,story, cur_index, steps){
+
+	$("#" + typed).delay(1000).typed({
+
+		stringsElement: $('#' + strings),
+		typeSpeed: 30,
+		backDelay: 500,
+		loop: false,
+		contentType: 'html', // or text
+		// defaults to false for infinite loop
+		loopCount: false,
+		callback: function(){
+			if (cur_index < steps){
+				narratorSpeaksReloader(data, input, story, cur_index, steps);
+			}
+			else{
+				generateNar(input, data);
+			}
+			updateScroll();
+		}
+	});
+
+
+
+}
+
+function narratorSpeaksReloader(data, input, story, curr_index, steps){
+	var chatCont = document.getElementById("chatcontainter");
+
+	var narLi = document.createElement("li");
+	narLi.className = "narImage";
+
+	var narImage = document.createElement("img");
+	narImage.src = "/static/small3.jpeg";
+
+	narLi.appendChild(narImage);
+
+	var narResponse = document.createElement("div");
+
+	narResponse.className = "narrator";
+
+	var typedStrings =  document.createElement("div");
+	var nar_strings = "nar_strings" + nar_count;
+	typedStrings.id = nar_strings;
+
+	var par = document.createElement("p");
+	console.log(curr_index)
+	var textNode = document.createTextNode(story[curr_index]);
+	par.appendChild(textNode);
+
+	typedStrings.appendChild(par);
+
+	narResponse.appendChild(typedStrings);
+
+	span = document.createElement("span");
+	var nar_span = "nar_typed" + nar_count;
+	span.id = nar_span;
+
+	narResponse.appendChild(span);
+
+	narLi.appendChild(narResponse);
+
+	chatCont.appendChild(narLi);
+	var new_index = curr_index + 1
+	makeTypeNarReloader(nar_strings,nar_span, data, input, story, new_index, steps);
+	nar_count += 1;
 }
