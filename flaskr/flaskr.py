@@ -36,6 +36,7 @@ status =  True
 with open('data.txt', 'r') as myfile:
     lexiconDict = myfile.read().replace('\n', '')
 lexiconDict = ast.literal_eval(lexiconDict)
+storyBoard = {'sadness': ['Hope you are not having a bad day. :(.  Coming with what you want.', 'Oh no there are so many heartbreaking stories...', "Here's one. I have my shoulder for you if you need it."], 'anticipation': ['I have something tantalizing for you!'], 'disgust': ['As you wish.', "I can't look at this one anymore...", "You're gonna hate me for this....But that's exactly what you want today right?"], 'positive': ["Got you! I'm sure I have something <>", "This one's pretty nice!", "Here's something <>. I'm sure you'll like it"], 'anger': ['Alright, now this may or may not be pretty upsetting. I am bad at finding negative stories.'], 'joy': ["Great! I'll help facilitate some happiness for you.", "Ahh... Here's something that'll bring you joy! Please enjoy. :)"], 'fear': ['Boy do I have something scary for you!', 'This should give you something to be afraid of.'], 'trust': ["Well, having trust in each other is always a good thing. I'll see if I can find an honorable story for you.", 'Trust trust trust, do you want to bulid trust with others?', 'Well here is something lighthearted at least. :)'], 'negative': ['Okay, seems you are having a really bad day, sorry for you.', "Don't worry, Rodbot can make you happy."], 'surprise': ["Hold on. I'll be right back with what you want.", '......zzz', "Surprise! Here's something that'll shock your mind."]}
 #lexiconDict = json.dumps(lexiconDict)
 #lexiconDict = json.loads(lexiconDict)
 #print lexiconDict['happily']
@@ -74,7 +75,7 @@ sad = ['fail']
 # disgust = ['ew', 'trashy', 'fail']
 # positive = ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing']
 # negative = ['trashy', 'wtf', 'fail', 'hate', 'ew']
-emotion_hash = {'anger': ['hate', 'fail'], 'fear': ['creepy'], 'anticipation': ['omg', 'surprise', 'win', 'wtf', 'splendid'] ,'trust' : ['win', 'splendid', 'love'], 'surprise' : ['blimey', 'amazing', 'omg', 'wtf'], 'sadness' : ['fail'], 'joy' : ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win'], 'disgust' : ['ew', 'trashy', 'fail'], 'positive' : ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing'], 'negative' : ['trashy', 'wtf', 'fail', 'hate', 'ew']}
+emotion_hash = {'anger': ['hate', 'fail'], 'fear': ['creepy'], 'anticipation': ['omg', 'surprise', 'win', 'wtf', 'splendid'] ,'trust' : ['win', 'splendid', 'love'], 'surprise' : ['blimey', 'amazing', 'omg', 'wtf'], 'sadness' : ['fail'], 'joy' : ['lol', 'amazing', 'splendid', 'cute', 'omg', 'yaaass', 'win'], 'disgust' : ['ew', 'trashy', 'fail'], 'positive' : ['yaass', 'lol', 'cute', 'win', 'love', 'splendid', 'amazing'], 'negative' : ['trashy', 'wtf', 'hate', 'ew']}
 
 def getGif(param):
 	adj = str(param)
@@ -83,12 +84,16 @@ def getGif(param):
 	return resp["data"][random.randint(0, len(resp["data"]) - 1)]["images"]["fixed_width"]["url"]
 	
 def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
-	if str(adj) in emotion_hash:
-		adj = random.choice(emotion_hash[adj])
+	if str(adj) in lexiconDict:
+		emotion_list = lexiconDict[str(adj)]
+		emotion = random.choice(emotion_list)
+		adj = random.choice(emotion_hash[emotion])
+		story = storyBoard[emotion]
 	else:
 		ranK = random.choice(emotion_hash.keys())
 		adj = random.choice(emotion_hash[ranK])
-		
+		story = storyBoard[ranK]
+
 	buzzes = []
 	for i in range(1,10):
 		r = requests.get('http://www.buzzfeed.com/api/v2/feeds/'+str(adj)+'?p='+str(i))
@@ -119,7 +124,7 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		classification = classify(content)
 			
 		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
-		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title, "classification": classification}
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title, "classification": classification, 'story': story}
 		return jsonify(ret)
 		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
 	return " "
