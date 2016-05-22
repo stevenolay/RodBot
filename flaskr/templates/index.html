@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
 {% block body %}
+<div class="container">
 	<div class="logo">
 		<ul>
 	    <li class="title"><p>RodBot</p></li>
@@ -18,11 +19,17 @@
       </div>
     </li>
 
-	
+
   </ul>
  </div>
  <div class="submit">
+<!-- <<<<<<< Updated upstream
 	<br>
   <input type="text" id="inputBox" name="formVal" placeholder="Tell me something...|." /><button onclick="findArticle2()">Press to see</button>
+======= -->
+  <input type="text" id="inputBox" name="formVal" placeholder="Tell me something...|." /><button onclick="findArticle2()">Send</button>
 </div>
+<!-- >>>>>>> Stashed changes -->
+</div>
+
 {% endblock %}

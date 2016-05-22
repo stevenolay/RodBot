@@ -63,54 +63,51 @@ html{
   float:left;
 height:50px;
 width:50px;
-  box-shadow:0 2px 15px rgba(0,0,0,.5);
+  box-shadow:0 2px 15px #ffffff;
+  border-radius: 10px;
 }
 .userImage img {
   float:right;
 height:50px;
 width:50px;
-  box-shadow:0 2px 15px rgba(0,0,0,.5);
+  box-shadow:0 2px 15px #ffffff;
+  border-radius: 10px;
 }
 .chat ul li .narrator{
-  margin-left:90px;
+  font-size: 18px;
+  margin-left:70px;
   /*background:blue;*/
   position:relative;
   min-height:25px;
   margin-top:35px;
   padding:10px;
   box-sizing:border-box;
- /* Chat box */ 
-  background:#daffb1;
+ /* Chat box */
+  background:#ffffff;
   word-wrap: break-word;
+  border-radius: 10px;
 
 }
 
 .chat ul li .user{
-  margin-left:90px;
+  /*margin-left:90px;*/
   /*background:blue;*/
+  color:#ffffff;
+  font-size: 18px;
   position:relative;
   min-height:25px;
   margin-top:35px;
   padding:10px;
   box-sizing:border-box;
-	
+
   /*USer chat box*/
-  margin-right:90px;
+  margin-right:70px;
   margin-left:0;
-  background:#def1ff;
+  background:#3e97f9;
+  border-radius: 10px;
 }
 
-.chat ul li .user:before{
-  content:"";
-  width:0px;
-  height:0px;
-  position:absolute;
-  right:0;
-  top:0;
-  margin-right:-15px;
-  border-top:15px solid #def1ff;
-  border-right:15px solid transparent;
-}
+
 .chat ul li .narrator:before{
   content:"";
   width:0px;
@@ -118,8 +115,8 @@ width:50px;
   position:absolute;
   left:0;
   top:0;
-  margin-left:-15px;
-  border-top:15px solid #daffb1;
+  /*margin-left:-15px;
+  border-top:15px solid #ffffff;*/
   border-left:15px solid transparent;
 }
 
@@ -128,24 +125,27 @@ width:50px;
   width:70%;
   margin:0;
   border:0;
-  padding:6px;
+  padding:10px;
   background:#e5ecff;
-  font:italic 12px Trebuchet MS;
+  font:italic 18px Trebuchet MS;
   box-sizing:border-box;
 }
 .submit button{
   box-sizing:border-box;
-  width:30%;padding:6px;font:12px Trebuchet MS; color:white;
+  width:30%;padding:10px;font:18px Trebuchet MS; color:white;
   background:#84adfc;
   margin:0;
-  border:0;
+  border-radius:5px;
 }
 .title {
+  color: #ffffff;
+  margin-top: 10px;
   font-size: 26px;
   text-align: center;
   font-weight: bold;
   font-family:Papyrus,Rockwell,Helvetica;
   padding:0px;
+  border-bottom: 2px solid #ffffff;
 }
 .title em{
   font-size:16px;
@@ -183,4 +183,11 @@ width:50px;
   min-width:300px;
   width:300px;
   height:30px;
+}
+
+.container {
+  background-image:url(/static/background1.jpeg);
+  width:320px;
+  height:500px;
+  border-radius: 10px;
 }
