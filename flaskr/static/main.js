@@ -1,18 +1,21 @@
 
 var user_count = 0
 var nar_count = 0
-
+var flag = false;
 function checkDOMChange()
 {
     // check for any new element being inserted here,
     // or a particular node being modified
-	var element = document.getElementById("chat");
-	if (element.scrollTop != element.scrollHeight)
-	{
-		element.scrollTop = element.scrollHeight;
+	if (flag != false) {
+		var element = document.getElementById("chat");
+		if (element.scrollTop != element.scrollHeight) {
+			element.scrollTop = element.scrollHeight;
+		}
 	}
     // call the function again after 100 milliseconds
-    setTimeout( checkDOMChange, 100 );
+
+		setTimeout(checkDOMChange, 100);
+
 }
 checkDOMChange()
 /*var element = document.getElementById("chat");
@@ -238,7 +241,7 @@ function generateNar(input, data){
 }
 
 function makeTypeNarReloader(strings, typed,data, input,story, cur_index, steps){
-
+	flag = true;
 	$("#" + typed).delay(1000).typed({
 
 		stringsElement: $('#' + strings),
@@ -253,6 +256,7 @@ function makeTypeNarReloader(strings, typed,data, input,story, cur_index, steps)
 				narratorSpeaksReloader(data, input, story, cur_index, steps);
 			}
 			else{
+				flag = false;
 				generateNar(input, data);
 			}
 			updateScroll();
