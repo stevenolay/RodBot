@@ -1,6 +1,26 @@
 
 var user_count = 0
 var nar_count = 0
+
+function checkDOMChange()
+{
+    // check for any new element being inserted here,
+    // or a particular node being modified
+	var element = document.getElementById("chat");
+	if (element.scrollTop != element.scrollHeight)
+	{
+		element.scrollTop = element.scrollHeight;
+	}
+    // call the function again after 100 milliseconds
+    setTimeout( checkDOMChange, 100 );
+}
+checkDOMChange()
+/*var element = document.getElementById("chat");
+element.addEventListener("autoscroll", function(){
+	var element = document.getElementById("chat");
+	element.scrollTop = element.scrollHeight;
+})*/
+
 function findArticle(args){
 
 	var adj = document.getElementById("chat").value
