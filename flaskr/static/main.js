@@ -125,12 +125,12 @@ function generateUser(input){
 	userResponse.appendChild(span);
 	userLi.appendChild(userResponse);
 	chatCont.appendChild(userLi);
-
+	
 	makeType(user_strings, user_span, input);
 	user_count += 1;
 }
 function makeType(strings, typed, input){
-
+	flag = true;
 	$("#" + typed).typed({
 
 		stringsElement: $('#' + strings),
@@ -140,13 +140,13 @@ function makeType(strings, typed, input){
 		contentType: 'html', // or text
 		// defaults to false for infinite loop
 		loopCount: false,
-		callback: function(){ narratorSpeaks(input), updateScroll(); }
+		callback: function(){ narratorSpeaks(input), updateScroll();}
 	});
 
 }
 
 function makeTypeNar(strings, typed, input){
-
+	flag = true;
 	$("#" + typed).delay(1000).typed({
 
 		stringsElement: $('#' + strings),
@@ -156,7 +156,7 @@ function makeTypeNar(strings, typed, input){
 		contentType: 'html', // or text
 		// defaults to false for infinite loop
 		loopCount: false,
-		callback: function(){ makeCall(input), updateScroll(); }
+		callback: function(){ makeCall(input), updateScroll(); flag=false;}
 	});
 
 }
