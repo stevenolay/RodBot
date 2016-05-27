@@ -108,7 +108,7 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 	if buzzes:	#Generates summary
 		num = random.randint(0, len(buzzes) - 1)
 		url = "http://www.buzzfeed.com/api/v2/buzz/" + str(buzzes[num]['id'])
-		r = requests.get(url) 
+		r = requests.get(url)
 		resp = r.json()
 		resp = resp['buzz']['sub_buzzes']
 		content = ""
@@ -120,14 +120,14 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		st = SummaryTool()
 		sentences_dic = st.get_sentences_ranks(content)
 		summary = st.get_summary(title, content, sentences_dic)
-		
 		classification = classify(content)
-			
+
 		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
-		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title, "classification": classification, 'story': story}
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title.upper(), "classification": classification, 'story': story}
 		return jsonify(ret)
 		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
-	return " "
+	ret = {"summary": "", "buzzURL": "", "gifURL": "", "title": "", "classification": "", 'story': ""}
+	return jsonify(ret)
 
 
 def classify(summary):
