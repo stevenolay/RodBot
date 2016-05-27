@@ -154,13 +154,14 @@ width:50px;
   font-style:italic;
 }
 .story{
-  border: 2px groove gray;
+  /*border: 2px groove gray;*/
 }
 .link{
   color:blue;
 }
 .preview{
   color:gray;
+  font-size: 15px;
 }
 .welcome{
   font:12px Trebuchet MS;
@@ -190,4 +191,10 @@ width:50px;
   width:320px;
   height:500px;
   border-radius: 10px;
+}
+.gif img{
+  width:200px;
+  height:150px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
