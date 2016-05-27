@@ -1,4 +1,3 @@
-
 var user_count = 0
 var nar_count = 0
 var flag = false;
@@ -162,7 +161,12 @@ function makeCall(input){
         success: function(res) {
             console.log(res);
             var data = res;
-			narratorSpeaksReloader(data, input, data['story'],0 ,data['story'].length);
+            if(data['title']==""){
+            	narratorSpeaksReloader(data, input, ["Sorry didn't catch you. What did you say?"],0 ,0);
+            }
+            else {
+				narratorSpeaksReloader(data, input, data['story'],0 ,data['story'].length);
+			}
 			console.log(data['story'])
 
         }
@@ -170,6 +174,7 @@ function makeCall(input){
 	
 }
 function generateNar(input, data){
+	if(data['title']=="") return
 	var chatCont = document.getElementById("chatcontainter");
 
 	var narLi = document.createElement("li");
@@ -186,6 +191,7 @@ function generateNar(input, data){
 	//narResponse.innerHTML = "Here is something " + input ;
 
 	var articleInfo = data;
+
 	console.log(articleInfo['classification']);
 	buzzURL = articleInfo["buzzURL"];
 	summary = articleInfo["summary"];
@@ -219,6 +225,8 @@ function generateNar(input, data){
 	gif.className = "gif";
 	var gifImage = document.createElement("img");
 	gifImage.src = gifURL;
+	//gifImage.style.height = '180px';
+    //gifImage.style.width = '180px';
 	
 	gif.appendChild(gifImage);
 	
