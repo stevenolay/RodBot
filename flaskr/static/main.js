@@ -116,14 +116,13 @@ function generateUser(input){
 	userResponse.appendChild(span);
 	userLi.appendChild(userResponse);
 	chatCont.appendChild(userLi);
-	
+
 	makeType(user_strings, user_span, input);
 	user_count += 1;
 }
 function makeType(strings, typed, input){
 	flag = true;
 	$("#" + typed).typed({
-
 		stringsElement: $('#' + strings),
 		typeSpeed: 30,
 		backDelay: 500,
@@ -131,11 +130,20 @@ function makeType(strings, typed, input){
 		contentType: 'html', // or text
 		// defaults to false for infinite loop
 		loopCount: false,
-		callback: function(){ narratorSpeaks(input), updateScroll();}
+		callback: function(){
+			var judge = input.split(" ");
+			console.log(judge.length);
+			if(judge.length > 1){
+				narratorSpeaksReloader(null, input, ["You asked for that much! Just one word plz :("],0 ,0);
+				//narSpeakError("You asked for that much! Just one word plz :(");
+			} else {
+				narratorSpeaks(input);
+			}
+			console.log("callback end");
+			updateScroll();
+		}
 	});
-
 }
-
 function makeTypeNar(strings, typed, input){
 	flag = true;
 	$("#" + typed).delay(1000).typed({
@@ -147,7 +155,14 @@ function makeTypeNar(strings, typed, input){
 		contentType: 'html', // or text
 		// defaults to false for infinite loop
 		loopCount: false,
-		callback: function(){ makeCall(input), updateScroll(); flag=false;}
+		callback: function(){
+			var judge = input.split(" ");
+			console.log(judge.length);
+			if(judge.length > 1) {return}
+			makeCall(input);
+			updateScroll();
+			flag=false;
+		}
 	});
 
 }
@@ -162,7 +177,10 @@ function makeCall(input){
             console.log(res);
             var data = res;
             if(data['title']==""){
-            	narratorSpeaksReloader(data, input, ["Sorry didn't catch you. What did you say?"],0 ,0);
+            	narratorSpeaksReloader(null, input, ["Sorry didn't catch you. What did you say?"],0 ,0);
+            	//var nar_span = "nar_typed" + nar_count;
+            	//var nar_strings = "nar_strings" + nar_count;
+            	//makeNarSpeakError("Sorry didn't catch you. What did you say?", nar_strings, nar_span);
             }
             else {
 				narratorSpeaksReloader(data, input, data['story'],0 ,data['story'].length);
@@ -171,10 +189,9 @@ function makeCall(input){
 
         }
     });
-	
 }
 function generateNar(input, data){
-	if(data['title']=="") return
+	if(data==null) return
 	var chatCont = document.getElementById("chatcontainter");
 
 	var narLi = document.createElement("li");
@@ -239,8 +256,7 @@ function generateNar(input, data){
 	chatCont.appendChild(narLi);
 	updateScroll();
 }
-
-function makeTypeNarReloader(strings, typed,data, input,story, cur_index, steps){
+function makeTypeNarReloader(strings, typed, data, input,story, cur_index, steps){
 	flag = true;
 	$("#" + typed).delay(1000).typed({
 
@@ -266,7 +282,6 @@ function makeTypeNarReloader(strings, typed,data, input,story, cur_index, steps)
 
 
 }
-
 function narratorSpeaksReloader(data, input, story, curr_index, steps){
 	var chatCont = document.getElementById("chatcontainter");
 
