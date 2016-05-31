@@ -21,7 +21,7 @@
 	font-style: italic;
 }
 
-.user{
+.uuser{
 	width:170px;
 	height:33px;
 	background-color:blue;
@@ -58,8 +58,8 @@
 }
 
 .button{
-	width:55px;
-	height:55px;
+	width:54px;
+  	height:56px;
 	background-image:url(/static/background1.jpeg);
 	position:absolute;
 	right:24px;
