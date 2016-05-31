@@ -1,0 +1,72 @@
+.back{
+	background-image: url("INTRO1.jpg");
+	width:350px;
+	height:620px;
+	background-size: 100% 98%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top:0px;
+	position:relative;
+}
+.type{
+	width:185px;
+	height:50px;
+	position:absolute;
+	right:42px;
+	top:56px;
+}
+#type{
+	font-family: Chalkduster;
+	font-size: 20px;
+	font-style: italic;
+}
+
+.user{
+	width:170px;
+	height:33px;
+	background-color:blue;
+	position: absolute;
+	right:22px;
+	top:200px;
+	color:white;
+	padding: 10px;
+	display: none;
+}
+
+.guy{
+	width:170px;
+	height:210px;
+	background-color:white;
+	position: absolute;
+	font-family: noteworthy;
+	right:120px;
+	top:257px;
+	padding: 10px;
+	display: none;
+}
+
+.ready{
+	width:170px;
+	height:72px;
+	background-color:white;
+	position: absolute;
+	font-family: noteworthy;
+	right:120px;
+	top:481px;
+	padding: 10px;
+	display: none;
+}
+
+.button{
+	width:55px;
+	height:55px;
+	background-image:url(/static/background1.jpeg);
+	position:absolute;
+	right:24px;
+	top:490px;
+	display: none;
+}
+
+div{
+	display: block;
+}
