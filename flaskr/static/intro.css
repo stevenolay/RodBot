@@ -24,7 +24,9 @@
 .uuser{
 	width:170px;
 	height:33px;
-	background-color:blue;
+	/*background-color:blue;*/
+	background:#3e97f9;
+	box-sizing:border-box;
 	position: absolute;
 	right:22px;
 	top:200px;
