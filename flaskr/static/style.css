@@ -130,6 +130,7 @@ width:50px;
   font:italic 18px Trebuchet MS;
   box-sizing:border-box;
 }
+
 .submit button{
   box-sizing:border-box;
   width:30%;padding:10px;font:18px Trebuchet MS; color:white;
@@ -137,6 +138,9 @@ width:50px;
   margin:0;
   border-radius:5px;
 }
+
+
+
 .title {
   color: #ffffff;
   margin-top: 10px;
