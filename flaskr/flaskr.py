@@ -110,7 +110,10 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		url = "http://www.buzzfeed.com/api/v2/buzz/" + str(buzzes[num]['id'])
 		r = requests.get(url)
 		resp = r.json()
-		pic =  resp['buzz']['images']['big']
+		if resp['buzz']['images']['big']:
+			pic =  resp['buzz']['images']['big']
+		else: 
+			pic = str(getGif(adj))
 		resp = resp['buzz']['sub_buzzes']
 		content = ""
 		for i in resp:
