@@ -92,7 +92,7 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 	else:
 		ranK = random.choice(emotion_hash.keys())
 		adj = random.choice(emotion_hash[ranK])
-		story = storyBoard[ranK]
+		story = ["I'm sorry I couldn't find the story that you wanted. I think this story is pretty interesting and I hope you can find appreciation in it too."]
 
 	buzzes = []
 	for i in range(1,10):
@@ -110,20 +110,26 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		url = "http://www.buzzfeed.com/api/v2/buzz/" + str(buzzes[num]['id'])
 		r = requests.get(url)
 		resp = r.json()
+		pic =  resp['buzz']['images']['big']
 		resp = resp['buzz']['sub_buzzes']
 		content = ""
 		for i in resp:
 			content += i['description']
 		title = buzzes[num]['title']
-		title = urllib2.unquote(title)
-		content = urllib2.unquote(content)
-		st = SummaryTool()
-		sentences_dic = st.get_sentences_ranks(content)
-		summary = st.get_summary(title, content, sentences_dic)
-		classification = classify(content)
-
+		#title = urllib2.unquote(title)
+		#content = urllib2.unquote(content)
+		#st = SummaryTool()
+		#sentences_dic = st.get_sentences_ranks(content)
+		#summary = st.get_summary(title, content, sentences_dic)
+		#classification = classify(content)
+		if len(content) > 140:
+			summary = content[:140] + "..."
+		else:
+			summary = content
 		buzzURL = 'http://www.buzzfeed.com/' + buzzes[num]['username'] + "/" + buzzes[num]['uri']
-		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": str(getGif(adj)), "title": title.upper(), "classification": classification, 'story': story}
+		#gif = str(getGif(adj))
+
+		ret = {"summary": summary, "buzzURL": buzzURL, "gifURL": pic, "title": title.upper(), "classification": "Calssification is Deprecated", 'story': story}
 		return jsonify(ret)
 		#"Summary: " + summary + "\n" + "Content Original: " + content + "Title: " + title
 	ret = {"summary": "", "buzzURL": "", "gifURL": "", "title": "", "classification": "", 'story': ""}
