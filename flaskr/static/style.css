@@ -13,11 +13,19 @@ html{
   overflow-y: scroll;
 }
 .submit{
-  font:12px Trebuchet MS;
+  /*margin:left auto;
+  border:0;*/
+  margin-left:-15px;
+  width:320px;
+  background:#e5ecff;
+  font:italic 18px Trebuchet MS;
+  box-sizing:border-box;
+
+  /*font:12px Trebuchet MS;
   min-width:300px;
   width:300px;
   margin:auto auto;
-  border-top:2px solid #9c9c9c;
+  border-top:2px solid #9c9c9c;*/
 }
 
 .url li a{
@@ -120,9 +128,8 @@ width:50px;
   border-left:15px solid transparent;
 }
 
-
 .submit input[type="text"]{
-  width:70%;
+  width:20%;
   margin:0;
   border:0;
   padding:10px;
