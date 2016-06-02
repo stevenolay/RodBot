@@ -2,10 +2,10 @@
 #import sqlite3
 import sys
 import ast
-import json 
-import string 
+import json
+import string
 import copy
-import io 
+import io
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, jsonify
 from jinja2 import Environment, FileSystemLoader
@@ -36,7 +36,7 @@ status =  True
 with open('data.txt', 'r') as myfile:
     lexiconDict = myfile.read().replace('\n', '')
 lexiconDict = ast.literal_eval(lexiconDict)
-storyBoard = {'sadness': ['Hope you are not having a bad day. :(.  Coming with what you want.', 'Oh no there are so many heartbreaking stories...', "Here's one. I have my shoulder for you if you need it."], 'anticipation': ['I have something tantalizing for you!'], 'disgust': ['As you wish.', "I can't look at this one anymore...", "You're gonna hate me for this....But that's exactly what you want today right?"], 'positive': ["Got you! I'm sure I have something you want!", "This one's pretty nice!", "Here's it. I'm sure you'll like it"], 'anger': ['Alright, now this may or may not be pretty upsetting. I am bad at finding negative stories.'], 'joy': ["Great! I'll help facilitate some happiness for you.", "Ahh... Here's something that'll bring you joy! Please enjoy. :)"], 'fear': ['Boy do I have something scary for you!', 'This should give you something to be afraid of.'], 'trust': ["Well, having trust in each other is always a good thing. I'll see if I can find an honorable story for you.", 'Trust trust trust, do you want to bulid trust with others?', 'Well here is something lighthearted at least. :)'], 'negative': ['Okay, seems you are having a really bad day, sorry for you.', "Don't worry, Rodbot can make you happy."], 'surprise': ["Hold on. I'll be right back with what you want.", '......zzz', "Surprise! Here's something that'll shock your mind."]}
+storyBoard = {'sadness': ['Hope you are not having a bad day. :(.  Coming with what you want.', 'Oh no there are so many heartbreaking stories...', "Here's one. I have my shoulder for you if you need it."], 'anticipation': ['I have something tantalizing for you!'], 'disgust': ['As you wish.', "I can't look at this one anymore...", "You're gonna hate me for this....But that's exactly what you want today right?"], 'positive': ["Got you! I'm sure I have something you want!", "This one's pretty nice!", "Here you go! I'm sure you'll like this one. "], 'anger': ['Alright, now this may or may not be pretty upsetting. I am bad at finding negative stories.'], 'joy': ["Great! I'll help facilitate some happiness for you.", "Ahh... Here's something that'll bring you joy! Please enjoy. :)"], 'fear': ['Boy do I have something scary for you!', 'This should give you something to be afraid of.'], 'trust': ["Well, having trust in each other is always a good thing. I'll see if I can find an honorable story for you.", 'Trust trust trust, do you want to bulid trust with others?', 'Well here is something lighthearted at least. :)'], 'negative': ['Okay, seems you are having a really bad day, sorry for you.', "Don't worry, Rodbot can make you happy."], 'surprise': ["Hold on. I'll be right back with what you want.", '......zzz', "Surprise! Here's something that'll shock your mind."]}
 #lexiconDict = json.dumps(lexiconDict)
 #lexiconDict = json.loads(lexiconDict)
 #print lexiconDict['happily']
@@ -82,7 +82,7 @@ def getGif(param):
 	r = requests.get("http://api.giphy.com/v1/gifs/search?q="+adj+"&api_key=dc6zaTOxFJmzC")
 	resp = r.json()
 	return resp["data"][random.randint(0, len(resp["data"]) - 1)]["images"]["fixed_width"]["url"]
-	
+
 def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 	if str(adj) in lexiconDict:
 		emotion_list = lexiconDict[str(adj)]
@@ -99,12 +99,12 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		r = requests.get('http://www.buzzfeed.com/api/v2/feeds/'+str(adj)+'?p='+str(i))
 		res = r.text.replace('\n', '')
 		res = json.loads(res)
-		
+
 		buzz = res['buzzes']
 		for j in buzz:
 			if j['language'] == 'en':
 				buzzes.append(j)
-			
+
 	if buzzes:	#Generates summary
 		num = random.randint(0, len(buzzes) - 1)
 		url = "http://www.buzzfeed.com/api/v2/buzz/" + str(buzzes[num]['id'])
@@ -112,7 +112,7 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 		resp = r.json()
 		if resp['buzz']['images']['big']:
 			pic =  resp['buzz']['images']['big']
-		else: 
+		else:
 			pic = str(getGif(adj))
 		resp = resp['buzz']['sub_buzzes']
 		content = ""
@@ -141,17 +141,17 @@ def findArticle(adj): #Provide string such as 'funny', 'happy', 'sad'
 
 def classify(summary):
 	summ = summary
-	
+
 	for i in string.punctuation:
 		summ = summ.replace(i, ' ')
 
 	summ = summ.split(' ')
 	summ = filter(lambda a: a != '', summ)
-	
+
 	lexiconDict
 	emotion_counts = {'anger': 0, 'fear': 0, 'anticipation': 0 ,'trust' : 0, 'surprise' : 0, 'sadness' : 0, 'joy' : 0, 'disgust' : 0, 'positive' : 0, 'negative' : 0}
-	
-	index = 0 
+
+	index = 0
 	while index < len(summ):
 		if summ[index] == ("not" or "Not"):
 			if summ[index + 1] in lexiconDict.keys():
@@ -164,7 +164,7 @@ def classify(summary):
 			for i in emotes:
 				emotion_counts[i] = emotion_counts[i] + 1
 			index += 1
-		else: 
+		else:
 			index += 1
 
 	return max(emotion_counts, key=emotion_counts.get)
