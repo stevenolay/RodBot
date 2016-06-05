@@ -1,6 +1,13 @@
 var user_count = 0
 var nar_count = 0
 var flag = false;
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        findArticle2()
+    }
+});
+
 function checkDOMChange()
 {
     // check for any new element being inserted here,
@@ -17,31 +24,18 @@ function checkDOMChange()
 
 }
 checkDOMChange()
-/*var element = document.getElementById("chat");
-element.addEventListener("autoscroll", function(){
-	var element = document.getElementById("chat");
-	element.scrollTop = element.scrollHeight;
-})*/
 
-function findArticle(args){
-
-	var adj = document.getElementById("chat").value
-	console.log(adj)
-	window.location = adj
-}
-
-function test(){
-console.log("hello");
-}
 function updateScroll(){
 	var element = document.getElementById("chat");
 	element.scrollTop = element.scrollHeight;
 }
 function findArticle2(){
 	var input = document.getElementById("inputBox").value;
-	document.getElementById("inputBox").value = "";
-	generateUser(input);
-	updateScroll();
+	if (input != ""){
+		document.getElementById("inputBox").value = "";
+		generateUser(input);
+		updateScroll();
+		}
 }
 function narratorSpeaks(input){
 	var chatCont = document.getElementById("chatcontainter");
@@ -132,14 +126,12 @@ function makeType(strings, typed, input){
 		loopCount: false,
 		callback: function(){
 			var judge = input.split(" ");
-			console.log(judge.length);
 			if(judge.length > 1){
 				narratorSpeaksReloader(null, input, ["You asked for that much! Just one word plz :("],0 ,0);
 				//narSpeakError("You asked for that much! Just one word plz :(");
 			} else {
 				narratorSpeaks(input);
 			}
-			console.log("callback end");
 			updateScroll();
 		}
 	});
@@ -157,7 +149,6 @@ function makeTypeNar(strings, typed, input){
 		loopCount: false,
 		callback: function(){
 			var judge = input.split(" ");
-			console.log(judge.length);
 			if(judge.length > 1) {return}
 			makeCall(input);
 			updateScroll();
@@ -174,19 +165,13 @@ function makeCall(input){
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
-            console.log(res);
             var data = res;
             if(data['title']==""){
             	narratorSpeaksReloader(null, input, ["Sorry didn't catch you. What did you say?"],0 ,0);
-            	//var nar_span = "nar_typed" + nar_count;
-            	//var nar_strings = "nar_strings" + nar_count;
-            	//makeNarSpeakError("Sorry didn't catch you. What did you say?", nar_strings, nar_span);
             }
             else {
 				narratorSpeaksReloader(data, input, data['story'],0 ,data['story'].length);
 			}
-			console.log(data['story'])
-
         }
     });
 }
@@ -209,12 +194,10 @@ function generateNar(input, data){
 
 	var articleInfo = data;
 
-	console.log(articleInfo['classification']);
 	buzzURL = articleInfo["buzzURL"];
 	summary = articleInfo["summary"];
 	gifURL = articleInfo["gifURL"];
 	title = articleInfo["title"];
-	console.log(gifURL);
 	
 	//build story
 	var story = document.createElement("div");
@@ -242,8 +225,6 @@ function generateNar(input, data){
 	gif.className = "gif";
 	var gifImage = document.createElement("img");
 	gifImage.src = gifURL;
-	//gifImage.style.height = '180px';
-    //gifImage.style.width = '180px';
 	
 	gif.appendChild(gifImage);
 	
@@ -302,7 +283,7 @@ function narratorSpeaksReloader(data, input, story, curr_index, steps){
 	typedStrings.id = nar_strings;
 
 	var par = document.createElement("p");
-	console.log(curr_index)
+
 	var textNode = document.createTextNode(story[curr_index]);
 	par.appendChild(textNode);
 

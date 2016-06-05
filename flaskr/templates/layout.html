@@ -16,32 +16,6 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="{{ url_for('static', filename='main.js') }}"></script>
     <script src="{{ url_for('static', filename='typed.js') }}"></script>
-    <script>
-    $(function(){
-        $("#typed").typed({
-
-            stringsElement: $('#typed-strings'),
-            typeSpeed: 55
-            backDelay: 500,
-            loop: false,
-            contentType: 'html', // or text
-            // defaults to false for infinite loop
-            loopCount: false,
-            callback: function(){ foo(); },
-            resetCallback: function() { newTyped(); }
-        });
-
-        $(".reset").click(function(){
-            $("#typed").typed('reset');
-        });
-
-    });
-
-    function newTyped(){ /* A new typed object */ }
-
-    function foo(){ console.log("Callback"); }
-
-    </script>
      <script>
     $(document).ready(function(){
     	$(".uuser").show(1600,function(){
