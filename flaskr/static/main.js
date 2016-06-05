@@ -29,7 +29,7 @@ function updateScroll(){
 	var element = document.getElementById("chat");
 	element.scrollTop = element.scrollHeight;
 }
-function findArticle2(){
+function findArticle2(){ 
 	var input = document.getElementById("inputBox").value;
 	if (input != ""){
 		document.getElementById("inputBox").value = "";
@@ -37,7 +37,7 @@ function findArticle2(){
 		updateScroll();
 		}
 }
-function narratorSpeaks(input){
+function narratorSpeaks(input){ //Generate and fill Narrator speech bubble 
 	var chatCont = document.getElementById("chatcontainter");
 
 	var narLi = document.createElement("li");
@@ -76,7 +76,7 @@ function narratorSpeaks(input){
 	makeTypeNar(nar_strings,nar_span, input);
 	nar_count += 1;
 }
-function generateUser(input){
+function generateUser(input){ //Generate and Fill user speech bubble
 	var chatCont = document.getElementById("chatcontainter");
 
 	var userLi = document.createElement("li");
@@ -114,6 +114,8 @@ function generateUser(input){
 	makeType(user_strings, user_span, input);
 	user_count += 1;
 }
+
+//All functions below are JQUERY Typed.js function calls
 function makeType(strings, typed, input){
 	flag = true;
 	$("#" + typed).typed({
@@ -175,7 +177,9 @@ function makeCall(input){
         }
     });
 }
-function generateNar(input, data){
+
+
+function generateNar(input, data){ //Generate and fill narrator speech bubble
 	if(data==null) return
 	var chatCont = document.getElementById("chatcontainter");
 
