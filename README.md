@@ -6,9 +6,13 @@ RodBot is a storyboard-based chatbot that provides buzzfeed news stories that fi
 
 RodBot operates using a few key technologies.
 HTML and CSS:  RodBot is a web-platform based chatbot and the interface is created in HTML and CSS. 
+
 Python: The interface interacts with the an API that we have written using Python’s Flask.
+
 Javascript: Making calls to the API is done using Javascript. 
+
 BuzzFeed API: Used to query and find articles to suggest to users. 
+
 Type.js: Used to allow for the contents of the page to be typed using jquery. 
 
 ##### How RodBot Works:
