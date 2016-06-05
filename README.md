@@ -1,4 +1,4 @@
-# tell-me-something
+# tell-me-something RodBot
 #### General Information
 ##### What RodBot does:
 RodBot is a storyboard-based chatbot that provides buzzfeed news stories that fits a user’s desired emotion.
