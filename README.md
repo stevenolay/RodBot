@@ -25,3 +25,25 @@ When a user initially inputted word is classified it is mapped to an appropriate
 
 In the front end the contents of the returned JSON are parsed and it begins by first executing the storyboard to set the tone based on the type of article requested. The storyboard is a list of strings which are chained into the dynamically allocated user response and narrator response div boxes. This process simulates the chat interface message flow. The responses are dynamically given unique tags and passed to the Type.js tool which adds the contents of the story incrementally into the div. After a div is completed if there are more strings in the storyboard it continues until the storyboard is finished and then displays the article. The title of the article is one the top of the dialog box and the article URL is shown along with the snippet of the description of the article. From there the image in the JSON response is also displayed beneath the presented story to help highlight the tone of the article to the user. 
 
+#### Project Setup Information
+
+Must install Python's Flask and Python's Requests modules. 
+
+Can be found here: 
+
+http://flask.pocoo.org/
+
+http://docs.python-requests.org/en/master/user/install/#install
+
+##### How to Use RodBot
+
+Clone the Repository
+Navigate to flaskr folder.
+Run rodbot.py.
+Visit http://localhost:5000
+Click Next on the Welcome Page.
+Start Chatting!
+
+##### Demo Video: 
+Live Demo: https://www.youtube.com/watch?v=IiFu9H5qCRc
+
